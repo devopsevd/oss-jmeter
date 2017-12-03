@@ -1,6 +1,6 @@
 FROM java:8
  
-RUN wget http://mirror.nbtelecom.com.br/apache/jmeter/binaries/apache-jmeter-3.2.tgz
+RUN wget http://mirror.nbtelecom.com.br/apache/jmeter/binaries/apache-jmeter-3.3.tgz
 RUN tar -xvzf apache-jmeter-3.2.tgz
 RUN rm apache-jmeter-3.2.tgz
 
