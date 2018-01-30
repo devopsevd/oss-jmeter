@@ -2,13 +2,13 @@ version: '2'
 
 services:
   master:
-    build: ./jmeter-master
+    image: devopsevd/oss-jmeter-master
     container_name: master
     tty: true
     networks:
       - jmeter-network
   slave:
-    build: ./jmeter-slave
+    image: devopsevd/oss-jmeter-slave
     networks:
       - jmeter-network
 
