@@ -7,7 +7,7 @@ COUNT=${1-1}
 
 sudo docker-compose scale master=1 slave=$COUNT
 
-SLAVE_IP=$(sudo docker inspect -f '{{.Name}} {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(docker ps -aq) | grep slave | awk -F' ' '{print $2}' | tr '\n' ',' | sed 's/.$//')
+SLAVE_IP=$(sudo docker inspect -f '{{.Name}} {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(sudo docker ps -aq) | grep slave | awk -F' ' '{print $2}' | tr '\n' ',' | sed 's/.$//')
 WDIR=`sudo docker exec -t master /bin/pwd | tr -d '\r'`
 mkdir -p results
 for filename in scripts/*.jmx; do
