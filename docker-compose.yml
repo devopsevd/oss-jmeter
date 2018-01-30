@@ -9,7 +9,6 @@ services:
       - jmeter-network
   slave:
     image: devopsevd/oss-jmeter-slave
-    container_name: slave
     networks:
       - jmeter-network
 
