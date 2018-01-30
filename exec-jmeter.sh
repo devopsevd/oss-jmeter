@@ -5,7 +5,7 @@ COUNT=${1-1}
 # docker build -t jmeter-base jmeter-base
 # docker-compose up -d && docker-compose scale master=1 slave=$COUNT
 
-sudo docker-compose up --scale master=1 slave=$COUNT
+sudo docker-compose up -d && sudo docker-compose scale master=1 slave=$COUNT
 
 SLAVE_IP=$(sudo docker inspect -f '{{.Name}} {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(sudo docker ps -aq) | grep slave | awk -F' ' '{print $2}' | tr '\n' ',' | sed 's/.$//')
 WDIR=`sudo docker exec -t master /bin/pwd | tr -d '\r'`
