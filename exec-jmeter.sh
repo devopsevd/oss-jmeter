@@ -5,18 +5,18 @@ COUNT=${1-1}
 # docker build -t jmeter-base jmeter-base
 # docker-compose up -d && docker-compose scale master=1 slave=$COUNT
 
-docker-compose scale master=1 slave=$COUNT
+sudo docker-compose scale master=1 slave=$COUNT
 
-SLAVE_IP=$(docker inspect -f '{{.Name}} {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(docker ps -aq) | grep slave | awk -F' ' '{print $2}' | tr '\n' ',' | sed 's/.$//')
-WDIR=`docker exec -t master /bin/pwd | tr -d '\r'`
+SLAVE_IP=$(sudo docker inspect -f '{{.Name}} {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(docker ps -aq) | grep slave | awk -F' ' '{print $2}' | tr '\n' ',' | sed 's/.$//')
+WDIR=`sudo docker exec -t master /bin/pwd | tr -d '\r'`
 mkdir -p results
 for filename in scripts/*.jmx; do
     NAME=$(basename $filename)
     NAME="${NAME%.*}"
-    eval "docker cp $filename master:$WDIR/scripts/"
-    eval "docker exec -t master /bin/bash -c 'mkdir $NAME && cd $NAME && ../bin/jmeter -n -t ../$filename -R$SLAVE_IP'"
-    eval "docker cp master:$WDIR/$NAME results/"
+    eval "sudo docker cp $filename master:$WDIR/scripts/"
+    eval "sudo docker exec -t master /bin/bash -c 'mkdir $NAME && cd $NAME && ../bin/jmeter -n -t ../$filename -R$SLAVE_IP'"
+    eval "sudo docker cp master:$WDIR/$NAME results/"
 done
 
 # docker-compose stop && docker-compose rm -f
-docker-compose stop
+sudo docker-compose stop
