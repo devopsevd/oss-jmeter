@@ -5,13 +5,10 @@ services:
     image: devopsevd/oss-jmeter-master
     container_name: master
     tty: true
-    networks:
-      - jmeter-network
   slave:
     image: devopsevd/oss-jmeter-slave
-    networks:
-      - jmeter-network
 
 networks:
-  jmeter-network:
-    driver: bridge
+  default:
+    external:
+      name: bundlev2_prodnetwork
